@@ -1,2 +1,2 @@
 # Django-RestAPI
-Exploring the Django framework by creating an API using django's Restful framework 
+Exploring and getting acquainted with Django by creating an API using Django's restful framework.
