@@ -28,6 +28,33 @@ def bookList (request):
     else:
         return Response({'detail': 'Method not allowed.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-
+@api_view(['GET', 'PUT', 'DELETE'])
+def bookDetail(request,id):
+    try:
+        
+        book = Book.objects.get(id=id)
+            
+    except Book.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serialized_book = BookSerializer(book)
+        return Response(serialized_book.data)
+            
+    elif request.method == 'PUT':
+        serialized_book = BookSerializer(book, data=request.data)
+        if (serialized_book.is_valid()):
+            serialized_book.save()
+            return Response(serialized_book.data)
+        else:
+            return Response(serialized_book.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        book = Book.objects.get(id=id)
+        if(book is not None):
+            book.delete()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_204_NO_CONTENT)
+    
     
     

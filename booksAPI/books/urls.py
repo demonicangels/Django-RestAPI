@@ -21,5 +21,6 @@ from books import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('books/', views.bookList)
+    path('books/', views.bookList),
+    path('books/<int:id>', views.bookDetail)
 ]
